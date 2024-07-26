@@ -2,6 +2,7 @@ import api from '@services/Axios';
 import { FilterType } from '@services/types/Filters';
 import { PostSchema, PostType } from '@services/types/Posts';
 import { queryOptions } from '@tanstack/react-query';
+
 type ReturnPostType =
   | {
       type: 'success';

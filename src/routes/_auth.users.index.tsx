@@ -7,23 +7,23 @@ import { FilterSchema, FilterType } from '@services/types/Filters';
 import { createFileRoute, Link, useNavigate, useSearch } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 
-const USERS: { id: string; name: string }[] = [
-  { id: '1', name: 'Allberson' },
-  { id: '2', name: 'Caio' },
-  { id: '3', name: 'David' },
-  { id: '4', name: 'George' },
-  { id: '5', name: 'Jeni' },
-  { id: '6', name: 'Jesus' },
-  { id: '7', name: 'Juca' },
-  { id: '8', name: 'Lahra' },
-  { id: '9', name: 'Leo' },
-  { id: '10', name: 'Alecrim' },
-  { id: '11', name: 'Matheus' },
-  { id: '12', name: 'Natan' },
-  { id: '13', name: 'Paulo' },
-  { id: '14', name: 'Pedro' },
-  { id: '15', name: 'Renato' },
-  { id: '16', name: 'Vitor' },
+const USERS: { id: number; name: string }[] = [
+  { id: 1, name: 'Allberson' },
+  { id: 2, name: 'Caio' },
+  { id: 3, name: 'David' },
+  { id: 4, name: 'George' },
+  { id: 5, name: 'Jeni' },
+  { id: 6, name: 'Jesus' },
+  { id: 7, name: 'Juca' },
+  { id: 8, name: 'Lahra' },
+  { id: 9, name: 'Leo' },
+  { id: 10, name: 'Alecrim' },
+  { id: 11, name: 'Matheus' },
+  { id: 12, name: 'Natan' },
+  { id: 13, name: 'Paulo' },
+  { id: 14, name: 'Pedro' },
+  { id: 15, name: 'Renato' },
+  { id: 16, name: 'Vitor' },
 ];
 
 export const Route = createFileRoute('/_auth/users/')({
@@ -64,7 +64,7 @@ function UsersComponent() {
     });
   }
   function ResetFilter() {
-    form.setValue('userId', ''), navigate({ to: '/users' });
+    form.setValue('userId', undefined), navigate({ to: '/users' });
   }
   return (
     <div className="m-4 flex gap-4 p-6">
@@ -87,11 +87,12 @@ function UsersComponent() {
                     <FormLabel className="text-center">Usuário</FormLabel>
                     <Select
                       onValueChange={(value) => {
-                        form.setValue('userId', value);
-                        navigate({ to: '/users', search: { userId: value } });
+                        form.setValue('userId', +value);
+                        navigate({ to: '/users', search: { userId: +value } });
                       }}
-                      defaultValue={field.value}
-                      value={field.value}
+                      defaultValue={field.value?.toString()}
+                      value={field.value?.toString()}
+                      key={field.value}
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -100,7 +101,7 @@ function UsersComponent() {
                       </FormControl>
                       <SelectContent>
                         {USERS.map((user) => (
-                          <SelectItem value={user.id} key={user.id}>
+                          <SelectItem value={user.id.toString()} key={user.id}>
                             {user.name}
                           </SelectItem>
                         ))}
@@ -126,7 +127,7 @@ function UsersComponent() {
             posts.data.length ? (
               posts.data.map((post) => (
                 <div key={post.id} className="my-2 flex flex-col gap-2 rounded border p-2">
-                  <div className='border-b-2'>Post número: {post.id}</div>
+                  <div className="border-b-2">Post número: {post.id}</div>
 
                   <div>{post.title}</div>
                   <div>{post.body}</div>
